@@ -2,7 +2,7 @@ NAME		=	server
 SRCS		=	main.cpp  Server.cpp
 OBJS		=	$(SRCS:.cpp=.o)
 DEPS		=	$(SRCS:.cpp=.d)
-CC			=	clang++
+CC			=	g++
 RM			=	rm -f
 CFLAGS		=	-Wall -Wextra -Werror
 

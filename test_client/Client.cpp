@@ -7,6 +7,24 @@ Client::Client(std::string name, int port, int timeout):
 
 Client::~Client() {}
 
+std::string Client::GetCurretnTime()
+{
+    using namespace std::chrono;
+
+    system_clock::time_point now = system_clock::now();
+
+    microseconds ms = duration_cast<milliseconds>(now.time_since_epoch()) % 1000;
+    time_t timer = system_clock::to_time_t(now);
+    std::tm bt = *std::localtime(&timer);
+
+    std::ostringstream oss;
+
+    oss << std::put_time(&bt, "%Y-%m-%d %H:%M:%S");
+    oss << '.' << ms.count() / 1000;
+
+    return oss.str();
+}
+
 void Client::CreateSocket() {
     sock_ = socket(AF_INET, SOCK_STREAM, 0);
     if (sock_ == -1)
@@ -31,16 +49,11 @@ void Client::ConnectToServer() {
 }
 
 void Client::SendMessege() {
-    std::time_t now = std::time(NULL);
-    std::tm * ptm = std::localtime(&now);
+    std::ostringstream oss;
+    oss << "[" << GetCurretnTime() << "]" << ' ' << name_ << '\n';
 
-    char buffer[32];
-    std::strftime(buffer, 32, "[%Y.%m.%d %H:%M:%S]", ptm);
-
-    std::string messege(buffer);
-    messege += ' ' + name_ + '\n';
+    std::string messege(oss.str());
     std::cout << messege;
-    
     send(sock_, messege.c_str(), messege.size() + 1, 0);
 }
 

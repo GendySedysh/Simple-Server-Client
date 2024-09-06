@@ -2,7 +2,7 @@ NAME		=	client
 SRCS		=	main.cpp  Client.cpp
 OBJS		=	$(SRCS:.cpp=.o)
 DEPS		=	$(SRCS:.cpp=.d)
-CC			=	clang++
+CC			=	g++
 RM			=	rm -f
 CFLAGS		=	-Wall -Wextra -Werror
 
@@ -12,7 +12,7 @@ CFLAGS		=	-Wall -Wextra -Werror
 all			:	$(NAME)
 
 $(NAME)		:	$(OBJS)
-				$(CC) -o $(NAME) $(OBJS) 
+				$(CC) -o $(NAME) $(OBJS)
 
 clean		:
 				$(RM) $(OBJS) $(DEPS)
